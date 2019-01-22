@@ -1,0 +1,11 @@
+{
+    "params" :
+    {
+        "blog_name" : "Flasher Blog",
+        "fb_url" : "https://www.facebook.com/flasher_blog",
+        "tw_url" : "https://www.twitter.com/flasher_blog",
+        "insta_url" : "https://www.instagram.com/flasher_blog",
+        "git_url" : "https://www.github.com/flasher_blog",
+        "link_url" : "http://www.linkdin.com/flasher_blog"
+    }
+}
