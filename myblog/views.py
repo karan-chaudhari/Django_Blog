@@ -9,7 +9,9 @@ def home(request):
     return render(request, 'home.html', context)
 
 def about(request):
-    return render(request, 'about.html')
+    context = {'params':params}
+    return render(request, 'about.html', context)
 
 def contact(request):
-    return render(request, 'contact.html')    
+    context = {'params':params}
+    return render(request, 'contact.html', context)    
