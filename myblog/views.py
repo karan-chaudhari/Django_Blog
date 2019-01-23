@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.core.paginator import Paginator
 from django.utils import timezone
 from .models import Contact, Post
 import json
@@ -9,7 +10,10 @@ with open('config.json') as f:
 
 def home(request):
     posts_list = Post.objects.all()[::-1]
-    context = {'params':params, 'posts':posts_list}
+    paginator = Paginator(posts_list, 3)
+    page = request.GET.get('page')
+    posts = paginator.get_page(page)
+    context = {'params':params, 'posts':posts}
     return render(request, 'home.html', context)
 
 def about(request):
