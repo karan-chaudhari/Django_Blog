@@ -1,14 +1,15 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.utils import timezone
-from .models import Contact
+from .models import Contact, Post
 import json
 
 with open('config.json') as f:
     params = json.load(f)['params']
 
 def home(request):
-    context = {'params':params}
+    posts_list = Post.objects.all()[::-1]
+    context = {'params':params, 'posts':posts_list}
     return render(request, 'home.html', context)
 
 def about(request):
