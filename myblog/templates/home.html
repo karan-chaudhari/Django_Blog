@@ -6,6 +6,9 @@
             <img class="card-img-top" src="{{post.img.url}}" width="728" height="315" alt="Card image cap">
             <div class="card-body">
               <h2 class="card-title">{{post.title}}</h2>
+              {% if post.post_cate %}
+              <a href="">{{post.post_cate}}</a>
+              {% endif %}
               <p class="card-text">{{post.content|slice:"0:160"}}....</p>
               <a href="/post/{{post.slug}}" class="btn btn-primary">Read More &rarr;</a>
             </div>

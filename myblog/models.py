@@ -11,7 +11,14 @@ class Contact(models.Model):
     def __str__(self):
         return str(self.id) + " . " + self.name
 
+class Categorie(models.Model):
+    categ = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.categ
+
 class Post(models.Model):
+    post_cate = models.ForeignKey(Categorie, on_delete=models.CASCADE, related_name='categorie')
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200)
     author = models.CharField(max_length=100)

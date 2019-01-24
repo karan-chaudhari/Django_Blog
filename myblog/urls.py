@@ -7,4 +7,5 @@ urlpatterns = [
     path('about/', views.about, name='myapp-about'),
     path('contact/', views.contact, name='myapp-contact'),
     path('post/<slug:slug>', views.post, name='myapp-post'),
+    path('categorie/<str:categ>', views.category, name='myapp-categorie'),
 ]

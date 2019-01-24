@@ -2,22 +2,24 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.utils import timezone
-from .models import Contact, Comment, Post
+from .models import Contact, Comment, Categorie, Post
 import json
 
 with open('config.json') as f:
     params = json.load(f)['params']
+
+categories = Categorie.objects.order_by('categ')
 
 def home(request):
     posts_list = Post.objects.all()[::-1]
     paginator = Paginator(posts_list, 3)
     page = request.GET.get('page')
     posts = paginator.get_page(page)
-    context = {'params':params, 'posts':posts}
+    context = {'params':params, 'posts':posts, 'cates':categories}
     return render(request, 'home.html', context)
 
 def about(request):
-    context = {'params':params}
+    context = {'params':params, 'cates':categories}
     return render(request, 'about.html', context)
 
 def contact(request):
@@ -30,7 +32,7 @@ def contact(request):
         cont.save()
         messages.success(request,"Your details has been submitted. We will give you response very soon. Thank you so much.")
         return redirect('/contact')
-    context = {'params':params}
+    context = {'params':params, 'cates':categories}
     return render(request, 'contact.html', context)    
 
 def post(request, slug):
@@ -42,6 +44,11 @@ def post(request, slug):
         post_cmnt.save()   
     context = {'post':get_object_or_404(Post, slug=slug),
                 'comments':Comment.objects.filter(post_id=post),
-                'params':params}
+                'params':params, 'cates':categories}
     return render(request, 'post.html', context)    
-     
+
+def category(request, categ):
+    cate = get_object_or_404(Categorie, categ=categ)
+    posts = Post.objects.filter(post_cate=cate)
+    context = {'posts':posts, 'cates':categories, 'params':params}
+    return render(request, 'home.html', context)
