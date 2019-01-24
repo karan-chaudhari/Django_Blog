@@ -6,4 +6,5 @@ urlpatterns = [
     path('', views.home, name='myapp-home'),
     path('about/', views.about, name='myapp-about'),
     path('contact/', views.contact, name='myapp-contact'),
+    path('post/<slug:slug>', views.post, name='myapp-post'),
 ]
