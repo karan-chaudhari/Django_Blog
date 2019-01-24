@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.utils import timezone
-from .models import Contact, Post
+from .models import Contact, Comment, Post
 import json
 
 with open('config.json') as f:
@@ -34,6 +34,14 @@ def contact(request):
     return render(request, 'contact.html', context)    
 
 def post(request, slug):
+    post = get_object_or_404(Post, slug=slug)
+    if request.method == 'POST':
+        name = request.POST["name"]
+        cmnt = request.POST["cmnt"]
+        post_cmnt = Comment(post_id=post, name=name, cmnt=cmnt)
+        post_cmnt.save()   
     context = {'post':get_object_or_404(Post, slug=slug),
+                'comments':Comment.objects.filter(post_id=post),
                 'params':params}
     return render(request, 'post.html', context)    
+     

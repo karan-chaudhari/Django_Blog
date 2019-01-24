@@ -1,4 +1,6 @@
 {% extends 'layout.html' %}
+{% load crispy_forms_tags %}
+{% load humanize %}
 {% block content %}
           <!-- Title -->
           <h1 class="mt-4">{{post.title}}</h1>
@@ -28,14 +30,29 @@
 
           <!-- Comments Form -->
           <div class="card my-4">
+          	{% if comments.count > 0 %}
+            <h5 class="card-header">({{comments.count}}) Leave a Comment:</h5>
+            {% else %}
             <h5 class="card-header">Leave a Comment:</h5>
+            {% endif %}
             <div class="card-body">
-              <form>
+              <form method="post">
+              	{% csrf_token %}
                 <div class="form-group">
-                  <textarea class="form-control" rows="3"></textarea>
+                	<input class="form-control" type="text" name="name" placeholder="Your name...">
+                  	<textarea class="form-control my-2" name="cmnt" rows="3" placeholder="Write your comment here..."></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
               </form>
             </div>
+          </div>
+
+          <div>
+          	{% for comment in comments %}
+          		{{comment.timestamp|naturaltime}}
+          		<h5><i>{{comment.name}}</i></h5>
+          		<h6>{{comment.cmnt}}</h6>
+          		<hr>
+          	{% endfor %}
           </div>
 {% endblock %}
