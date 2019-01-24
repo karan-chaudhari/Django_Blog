@@ -1,9 +1,24 @@
 {% extends 'layout.html' %}
 {% block content %}
+          {% if search_term %}
+            <p>You searched for : <strong>{{search_term}}</strong></p>
+          {% endif %}
+
+          <!-- Message Flashing -->
+          {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+                {{message}}
+              </div>
+            {% endfor %}
+          {% endif %}
+
           <!-- Blog Post -->
           {% for post in posts %}
           <div class="card mb-4">
+            {% if not search_term %}
             <img class="card-img-top" src="{{post.img.url}}" width="728" height="315" alt="Card image cap">
+            {% endif %}
             <div class="card-body">
               <h2 class="card-title">{{post.title}}</h2>
               {% if post.post_cate %}
@@ -12,10 +27,12 @@
               <p class="card-text">{{post.content|slice:"0:160"}}....</p>
               <a href="/post/{{post.slug}}" class="btn btn-primary">Read More &rarr;</a>
             </div>
+            {% if not search_term %}
             <div class="card-footer text-muted">
               Posted on {{post.posted_date|date:"F d, Y"}} by
               <a href="#">{{post.author}}</a>
             </div>
+            {% endif %}
           </div>
           {% endfor %}
 

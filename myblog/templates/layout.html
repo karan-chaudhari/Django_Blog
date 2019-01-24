@@ -68,13 +68,14 @@
             <h5 class="card-header">Search</h5>
             <div class="card-body">
               <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search for...">
-                <span class="input-group-btn">
-                  <button class="btn btn-secondary" type="button">Go!</button>
-                </span>
+                <form class="form-inline my-4 my-lg-0" action="/search/">
+                  <input class="form-control mr-sm-4 col-md-8" name="query" type="search" placeholder="Search..." aria-label="Search" value="{{search_term}}" required>
+                  <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
+                </form>
               </div>
             </div>
           </div>
+
 
           <!-- Categories Widget -->
           <div class="card my-4">

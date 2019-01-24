@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.utils import timezone
+from django.db.models import Q
 from .models import Contact, Comment, Categorie, Post
 import json
 
@@ -42,6 +43,7 @@ def post(request, slug):
         cmnt = request.POST["cmnt"]
         post_cmnt = Comment(post_id=post, name=name, cmnt=cmnt)
         post_cmnt.save()   
+        messages.success(request, "Your comment published successfully.")
     context = {'post':get_object_or_404(Post, slug=slug),
                 'comments':Comment.objects.filter(post_id=post),
                 'params':params, 'cates':categories}
@@ -52,3 +54,12 @@ def category(request, categ):
     posts = Post.objects.filter(post_cate=cate)
     context = {'posts':posts, 'cates':categories, 'params':params}
     return render(request, 'home.html', context)
+
+def search(request):
+    if 'query' in request.GET:
+        search_term = request.GET["query"]
+        posts = Post.objects.filter(Q(title__icontains=search_term)|Q(content__icontains=search_term))
+        if not posts:
+            messages.info(request, "No results found")
+        context = {'posts':posts, 'params':params, 'search_term':search_term, 'cates':categories}
+        return render(request, 'home.html', context)
