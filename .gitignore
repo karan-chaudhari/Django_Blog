@@ -1,0 +1,14 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+
+# Distribution / packaging
+build/
+dist/
+downloads/
+lib/
+wheels/
+*.zip
+
+# Databases
+*.sqlite
